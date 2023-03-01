@@ -1,0 +1,5 @@
+torch
+tqdm
+opencv-python==4.5.5.62
+numpy
+pandas

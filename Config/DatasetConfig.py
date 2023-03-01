@@ -1,2 +1,2 @@
-width=512
-hight=512
+width=128
+hight=128

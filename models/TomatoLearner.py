@@ -4,7 +4,8 @@ from tqdm import tqdm
 from collections import OrderedDict
 
 class Learner():
-    def __init__(self, model, loss, optimizer, train_loader, test_loader):
+    def __init__(self,opt, model, loss, optimizer, train_loader, test_loader):
+        self.opt = opt
         self.loss = loss
         self.model = model
         self.optimizer = optimizer
@@ -81,7 +82,7 @@ class Learner():
     def run_batch(self, batch, val=False):
         input = batch[0]
         target = batch[1]
-        if(torch.cuda.is_available()):
+        if(torch.cuda.is_available() and self.opt.cuda):
             input = input.cuda()
             target = target.cuda()
         if(val):

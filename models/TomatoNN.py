@@ -11,16 +11,20 @@ class TomatoNN(nn.Module):
 
         self.conv4 = self.conv_block(n=1, nIn=128, nOut=128)
         self.conv5 = self.conv_block(n=1, nIn=128, nOut=512)
-        self.pool6 = nn.MaxPool2d(kernel_size=(2, 2))
+        self.pool6 = nn.MaxPool2d(kernel_size=(4, 4))
 
         self.conv7 = self.conv_block(n=1, nIn=512, nOut=512)
         self.conv8 = self.conv_block(n=1, nIn=512, nOut=1024)
         self.pool9 = nn.MaxPool2d(kernel_size=(2, 2))
 
+        # self.conv10 = self.conv_block(n=1, nIn=1024, nOut=1024)
+        # self.conv11 = self.conv_block(n=1, nIn=1024, nOut=1024)
+
         self.flatten = nn.Flatten(1)
 
-        self.dense1 = self.dense_block(2, nIn=1024*12*12, nOut=1024)
-        self.dense4 = self.dense_block(2, nIn=1024, nOut=1)
+        self.dense1 = self.dense_block(2, nIn=1024*13*13, nOut=1024)
+        self.dense2 = self.dense_block(2, nIn=1024, nOut=128)
+        self.dense4 = self.dense_block(2, nIn=128, nOut=1)
 
     def conv_block(self, n, nIn, nOut, batch_norm=True, pad=0):
         block = nn.Sequential()
@@ -54,6 +58,7 @@ class TomatoNN(nn.Module):
         X = self.flatten(X)
 
         X = self.dense1(X)
+        X = self.dense2(X)
         X = self.dense4(X)
 
         return X

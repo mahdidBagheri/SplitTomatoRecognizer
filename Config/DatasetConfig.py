@@ -1,2 +1,2 @@
-width=128
-hight=128
+width=256
+hight=256

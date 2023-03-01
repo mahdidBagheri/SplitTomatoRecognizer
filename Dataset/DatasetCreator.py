@@ -4,6 +4,7 @@ import os
 import pandas as pd
 import cv2
 
+# rot,
 def create_csv():
     df = pd.DataFrame(columns=["path", "label"])
     dataset_root = "Dataset"

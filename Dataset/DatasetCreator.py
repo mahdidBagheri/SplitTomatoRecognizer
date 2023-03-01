@@ -24,9 +24,8 @@ def create_csv():
         #///
         #augment
         new_path = os.path.join(dataset_root,f"no_split_{i}.jpg")
-        new_df = pd.DataFrame({"path":[new_path], "label":["0"]})
+        new_df = pd.DataFrame({"path":[new_path], "label":[0.0]})
         df = pd.concat((df,new_df), ignore_index=True)
-        df.to_csv("data.csv", index_label=False)
         cv2.imwrite(new_path,img)
 
     for i, p in enumerate(split_paths):
@@ -37,10 +36,12 @@ def create_csv():
         # augment
 
         new_path = os.path.join(dataset_root,f"split_{i}.jpg")
-        new_df = pd.DataFrame({"path": [new_path], "label": ["1"]})
+        new_df = pd.DataFrame({"path": [new_path], "label": [1.0]})
         df = pd.concat((df, new_df), ignore_index=True)
-        df.to_csv("data.csv", index_label=False)
         cv2.imwrite(new_path, img)
+
+    df = df.sample(frac=1).reset_index(drop=True)
+    df.to_csv("data.csv", index_label=False)
 
 
 

@@ -28,7 +28,7 @@ class TomatoNN(nn.Module):
 
     def conv_block(self, n, nIn, nOut, batch_norm=True, pad=0):
         block = nn.Sequential()
-        block.add_module(f"down_conv_{n}",nn.Conv2d(nIn,nOut,kernel_size=(3,3), stride=(1,1), padding=pad))
+        block.add_module(f"down_conv_{n}",nn.Conv2d(nIn,nOut,kernel_size=(5,5), stride=(1,1), padding=pad))
         if(batch_norm):
             block.add_module(f"down_bn_{n}", nn.BatchNorm2d(nOut))
         block.add_module(f"down_act_{n}", nn.ReLU())

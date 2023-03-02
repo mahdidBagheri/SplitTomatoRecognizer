@@ -19,9 +19,9 @@ class TomatoNN(nn.Module):
 
         self.flatten = nn.Flatten(1)
 
-        self.dense1 = self.dense_block(2, nIn=2048*6*6, nOut=1024)
-        self.dense2 = self.dense_block(2, nIn=1024, nOut=128)
-        self.dense4 = self.dense_block(2, nIn=128, nOut=1)
+        self.dense1 = self.dense_block(2, nIn=2048*6*6, nOut=1024, drop_out=True)
+        self.dense2 = self.dense_block(2, nIn=1024, nOut=128, drop_out= True)
+        self.dense4 = self.dense_block(2, nIn=128, nOut=1, drop_out=True)
 
     def conv_block(self, n, nIn, nOut, batch_norm=True, pad=0):
         block = nn.Sequential()
@@ -31,12 +31,14 @@ class TomatoNN(nn.Module):
         block.add_module(f"down_act_{n}", nn.ReLU())
         return block
 
-    def dense_block(self, n, nIn, nOut, batch_norm=True, pad=0):
+    def dense_block(self, n, nIn, nOut, batch_norm=True,drop_out=True):
         block = nn.Sequential()
         block.add_module(f"dense_{n}", nn.Linear(nIn, nOut))
         if(batch_norm):
             block.add_module(f"down_bn_{n}", nn.BatchNorm1d(nOut))
         block.add_module(f"down_act_{n}", nn.ReLU())
+        if(drop_out):
+            block.add_module(f"drop_out_{n}", nn.Dropout(0.2))
         return block
 
     def forward(self, X):

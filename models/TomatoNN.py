@@ -21,7 +21,7 @@ class TomatoNN(nn.Module):
 
         self.dense1 = self.dense_block(2, nIn=2048*6*6, nOut=1024, drop_out=True)
         self.dense2 = self.dense_block(2, nIn=1024, nOut=128, drop_out= True)
-        self.dense4 = self.dense_block(2, nIn=128, nOut=1, drop_out=True)
+        self.dense4 = self.dense_block(2, nIn=128, nOut=1, drop_out=False)
 
     def conv_block(self, n, nIn, nOut, batch_norm=True, pad=0):
         block = nn.Sequential()

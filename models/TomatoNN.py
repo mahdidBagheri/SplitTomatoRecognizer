@@ -22,7 +22,7 @@ class TomatoNN(nn.Module):
 
         self.flatten = nn.Flatten(1)
 
-        self.dense1 = self.dense_block(2, nIn=2048*12*12, nOut=1024, drop_out=True)
+        self.dense1 = self.dense_block(2, nIn=2048*10*10, nOut=1024, drop_out=True)
         self.dense2 = self.dense_block(2, nIn=1024, nOut=256, drop_out= True)
         self.dense4 = self.dense_block(2, nIn=256, nOut=1, drop_out=False)
 

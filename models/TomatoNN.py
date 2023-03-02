@@ -6,10 +6,12 @@ class TomatoNN(nn.Module):
     def __init__(self):
         super(TomatoNN, self).__init__()
         self.conv1 = self.conv_block(n=1, nIn=3, nOut=128)
+        self.pool1 = nn.MaxPool2d(kernel_size=(2, 2))
         self.conv2 = self.conv_block(n=1, nIn=128, nOut=128)
         self.pool3 = nn.MaxPool2d(kernel_size=(4,4))
 
         self.conv4 = self.conv_block(n=1, nIn=128, nOut=512)
+        self.pool6 = nn.MaxPool2d(kernel_size=(2, 2))
         self.conv5 = self.conv_block(n=1, nIn=512, nOut=512)
         self.pool6 = nn.MaxPool2d(kernel_size=(3, 3))
 
@@ -46,10 +48,12 @@ class TomatoNN(nn.Module):
 
     def forward(self, X):
         X = self.conv1(X)
+        X = self.pool1(X)
         X = self.conv2(X)
         X = self.pool3(X)
 
         X = self.conv4(X)
+        X = self.pool5(X)
         X = self.conv5(X)
         X = self.pool6(X)
 

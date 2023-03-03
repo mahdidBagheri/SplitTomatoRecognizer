@@ -38,12 +38,10 @@ if(__name__=="__main__"):
     loss = torch.nn.MSELoss()
     init_epoch = 0
     if (opt.resume):
-        chk_pt_path = "output/*.pt"
-        models_path = glob.glob(chk_pt_path)
-        checkpoint = torch.load(models_path[-1])
-        model.load_state_dict(checkpoint['model_state_dict'])
-        optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-        epoch = checkpoint['epoch']
+        checkpoint = torch.load("output/last.pt")
+        model.load_state_dict(checkpoint['model'])
+        optimizer.load_state_dict(checkpoint['optimizer'])
+        init_epoch = checkpoint['epoch']
         loss = checkpoint['loss']
 
     if(torch.cuda.is_available() and opt.cuda):
@@ -61,4 +59,4 @@ if(__name__=="__main__"):
 
         learner.save(path=f"{opt.output}/last.pt")
         if(epoch % save_period == 0):
-            learner.save(path=f"{opt.output}/model_{epoch}.pt")
+            learner.save(path=f"{opt.output}/chkp_{epoch}.pt")

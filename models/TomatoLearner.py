@@ -4,15 +4,17 @@ from tqdm import tqdm
 from collections import OrderedDict
 
 class Learner():
-    def __init__(self,opt, model, loss, optimizer, train_loader, test_loader):
+    def __init__(self,opt, model, loss, optimizer, train_loader, test_loader, epoch):
         self.opt = opt
         self.loss = loss
         self.model = model
         self.optimizer = optimizer
         self. train_loader = train_loader
         self.test_loader = test_loader
+        self.epoch = epoch
 
     def run_epoch(self,epoch, val=False):
+        self.epoch = epoch
         if not val:
             pbar = tqdm(self.train_loader, desc=f"train epoch {epoch}")
             self.model.train()
@@ -74,7 +76,11 @@ class Learner():
         return loss_sum/len(outputs)
 
     def save(self, path):
-        torch.save(self.model.state_dict(), path)
+        torch.save({"model":self.model.state_dict(),
+                    "optimizer":self.optimizer.state_dict(),
+                    "loss":self.loss,
+                    "epoch":self.epoch},
+                   path)
 
     def schedule_lr(self):
         pass

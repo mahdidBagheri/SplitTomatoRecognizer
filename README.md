@@ -1,4 +1,4 @@
-# XihelmFirstTask
+# Split Tomato Recognizer
 initial task task in Xihelm, on recognition of tomatoes.
 
 ## install
